@@ -14,15 +14,17 @@ source("R/calCNVScore_for_CEP.R") ## calculate CNV score (MS, Corr) with CEP res
 #################################
 
 ## write your sample names ##
-tln <- c("EBUS_10", "BRONCHO_11", "EBUS_12", "EBUS_13", "EBUS_15", "EBUS_19", "EBUS_51")
-tlb <- c("EBUS_06", "EBUS_28", "EBUS_49", "BRONCHO_58")
-bmeta <- c("NS_02", "NS_03", "NS_04", "NS_06", "NS_07", "NS_12", "NS_13", "NS_16", "NS_17", "NS_19")
+tumor <- c("Tumor_Example")
+normal <- c("Normal_Example")
 
-samples <- c(bmeta, tln, tlb)
+final_cell_all.merged <- readRDS("cell_annotation_tumor_and_normal.Rds")
+tumor_example <- readRDS("tumor_example_log2_normalized.Rds")
+normal_example <- readRDS("normal_example_log2_normalized.Rds")
 
 load(file = "Normal_Seurat.rds") # Pan-normal log2-normalized(TPM+1) data
 load(file = "Normal_info_data.rds") # Cell type information of Pan-normla data
 load("final_cell_all_merged.rds") # All of Tumor log2-normalized(TPM+1) data
+load(
 
 ## count if > 20% of EP -> add
 EP_cutoff = 20
@@ -38,13 +40,10 @@ for(s in samples){
   if(tb$percent[tb$cell_type == "EP"] > EP_cutoff){
     runCEP.AddNormal(s, sample.info)
 	## Sample list of EP proportion > EP_cutoff (20%)
-	## EBUS_28, NS_03, NS_07, NS_12, LUNG_T34, NS_04, EBUS_06, NS_17, EBUS_51, NS_13, 
-	## LUNG_T18, LUNG_T28, EBUS_15, NS_19, LUNG_T30
+
   }
   runCEP(s, sample.info)
   ## Sample list of EP proportion <= EP_cutoff (20%)
-  ## BRONCHO_58, LUNG_T20, EBUS_19, EBUS_13, EBUS_12, NS_06, NS_02, EBUS_10, LUNG_T19, EBUS_49, 
-  ## BRONCHO_11, NS_16, LUNG_T25, LUNG_T31, LUNG_T09, LUNG_T08
 }
 
 
