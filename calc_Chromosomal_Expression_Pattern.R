@@ -40,12 +40,12 @@ if(prop[prop$Var1 %in% target.celltypes,]$Percent > EP_cutoff){
   runCEP(target.normalized = addnormal_example,  
          sample.info = addnormal_annotation, label = paste0(label,"_AddNormal"),
          annotationdata = ref_genome_example, target.celltypes = target.celltypes, output.dir = output.dir,
-         min.cells = 10, MYWalk = 100) ## Sample list of EP proportion > EP_cutoff (20%)
+         min.cells = 10, MYwalk = 100) ## Sample list of EP proportion > EP_cutoff (20%)
 }else{
   runCEP(target.normalized = tumor_example,  
          sample.info = cell_annotation_with_tumor, label = label,
          annotationdata = ref_genome_example,target.celltypes = target.celltypes, output.dir = output.dir,
-         min.cells = 10, MYWalk = 100) ## Sample list of EP proportion <= EP_cutoff (20%)
+         min.cells = 10, MYwalk = 100) ## Sample list of EP proportion <= EP_cutoff (20%)
 }
 
 ###################################################################################################
