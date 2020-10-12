@@ -12,4 +12,9 @@ In order to separate maligant tumor cells from non-malignant cells, we calculate
   - Maligant cells were classified if their CNV signals (MS) > 0.02 or CNV correlation (CORR) > 0.2.
   
   
+# Example code
+
+After download the codes, run example data using 'calc_Chromosomal_Expression_Pattern.R'.
+
+
 
