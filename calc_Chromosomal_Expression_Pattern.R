@@ -31,9 +31,9 @@ output_dir = paste0(getwd(), "/", "example")
 prop <- as.data.frame(table(cell_annotation_with_tumor$celltype))
 prop$Percent = prop$Freq / nrow(cell_annotation_with_tumor) * 100
 
+##2. Check the proportion (adding normal cells or not)
 if(prop[prop$Var1 %in% target.celltypes,]$Percent > EP_cutoff){
   
-  ##0. add Normal data
   list <- addNormalDataset(tumor.data = tumor_example, tumor.ident = cell_annotation_with_tumor, target.celltypes = target.celltypes,
                            normal.data = normal_example)
   addnormal_example <- as.matrix(list$data); addnormal_annotation <- list$ident
