@@ -8,17 +8,6 @@ calCNVScore <- function(sh, cell_info, s, levels, cutoff.corr, cutoff.score, met
 
   cell_info2 <- plyr::join(cell_info, CNV_score, by="Row.names") # boxplot for celltype
 
-  ## Boxplot per each celltype - MS
-  ggplot(cell_info2,aes(x=celltype ,y=MS, fill=celltype))  +
-    geom_boxplot(outlier.colour = "black", position = position_dodge(width=0.9)) +
-    geom_point(position=position_jitterdodge(dodge.width=0.9), alpha=.7, size=1) +
-    scale_fill_manual(values=cols25()) + theme_bw()
-  ggsave(paste0(s, "_boxplot_MS_score.pdf"), width = 7, height = 3.5)
-
-  ## 2Dpot for MS and SD
-  ggplot(cell_info2, aes(MS, SD)) + geom_point()
-  ggsave(paste0(s, "_2Dplot_MS_SD.pdf"),width = 3.5, height = 3.5)
-
   ## MS top 5% cells
   top_MS_cells <- arrange(cell_info2, desc(MS))[1:round(dim(cell_info2)[1]*0.05),]$Row.names  # Top 5%
 
