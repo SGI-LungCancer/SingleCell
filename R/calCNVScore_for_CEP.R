@@ -1,4 +1,5 @@
-calCNVScore <- function(sh, cell_info, s, levels, cutoff.corr, cutoff.score, meta, target.celltypes){
+calCNVScore <- function(sh, cell_info, s, levels, cutoff.corr, cutoff.score, meta, target.celltypes,
+                        output.dir){
 
   sh2 = sh; dat = t(sh2) ## already remove chromosomal location info
   CNV_score <- data.frame(MS = colMeans(sh2^2), SS = apply(sh2^2, 2, sum), SD = apply(sh2, 2, sd))
@@ -41,7 +42,7 @@ calCNVScore <- function(sh, cell_info, s, levels, cutoff.corr, cutoff.score, met
     theme(axis.title.y = element_text(face="bold", size=16), axis.text.y  = element_text(size=12)) +
     theme(panel.border=element_rect(fill=NA, colour="black", size=2), legend.position = 'right')
   expos
-  ggsave(paste0("final_",s, "_all_cells_CNV_score_vs_cor_classification.pdf"), width = 7, height = 5)
+  ggsave(paste0(output.dir,"/", "final_",s, "_all_cells_CNV_score_vs_cor_classification.pdf"), width = 7, height = 5)
 
   return (cell_info3)
 }
