@@ -15,7 +15,7 @@ runCEP <- function(target.normalized, sample.info, label, annotationdata, min.ce
   ## Calculate MS (Mean of squares) and CORR (Correlation)
   ## if MS score > cutoff.score or Correlation score > cutoff.corr : Malignant cells
   final_cell_info <- calCNVScore(tcidea@cnv.data, tcidea@ident, tcidea@label, levels, cutoff.score = 0.02, cutoff.corr = 0.2,meta = NULL,
-                                 target.celltypes)
+                                 target.celltypes, output.dir)
   
   ## Save calculated info
   saveRDS(final_cell_info, file = paste0(output.dir,"/", label, "_after_calc_CNV_score.Rds")) # save final_cell_info (calculated CNV score)
