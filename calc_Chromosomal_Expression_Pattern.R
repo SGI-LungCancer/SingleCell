@@ -18,7 +18,7 @@ cell_annotation_with_tumor <- readRDS(file = "example/cell_info_tumor_example.Rd
 tumor_example <- readRDS(file = "example/log2TPM_tumor_example.Rds")
 normal_example <- readRDS(file = "example/log2TPM_normal_example.Rds")
 ref_genome_example <- readRDS(file = "example/refgenome_example.Rds")
-output_dir = paste0(getwd(), "/", "example")
+output.dir = paste0(getwd(), "/", "example")
 ###################################################################################################
 ## PARAMETERS #####################################################################################
 EP_cutoff = 20 ## count if > 20% of EP -> add
