@@ -1,3 +1,35 @@
+## Calculate Chromosomal expression pattern (CEP) ##
+runCEP <- function(target.normalized, sample.info, label, annotationdata, min.cells = 10, MYwalk = 100,
+                   target.celltypes, output.dir){
+  
+  ## 1. making TCIDEA object only tumor cells ##
+  tcidea <- newTCIDEA(log.data = target.normalized, clustergroup = sample.info, label = label)
+  
+  ##2. calculate inferredCNV
+  ## Proportion of epithelia cells <= EP_CUTOFF
+  ## Only use genes expressed > min.cells
+  ## Average of 100 genes (Binning)
+  tcidea <- calInferredCNV(tcidea, min.cells = min.cells, MYwalk = MYwalk, z.score = TRUE, limit = TRUE,
+                           annotationdata = annotationdata, log.file = paste0(label, "_log.txt"), use.total = FALSE)
+  
+  ## Calculate MS (Mean of squares) and CORR (Correlation)
+  ## if MS score > cutoff.score or Correlation score > cutoff.corr : Malignant cells
+  final_cell_info <- calCNVScore(tcidea@cnv.data, tcidea@ident, tcidea@label, levels, cutoff.score = 0.02, cutoff.corr = 0.2,meta = NULL,
+                                 target.celltypes)
+  
+  ## Save calculated info
+  saveRDS(final_cell_info, file = paste0(output.dir,"/", label, "_after_calc_CNV_score.Rds")) # save final_cell_info (calculated CNV score)
+  
+  ## Save Object file
+  saveRDS(tcidea, file = paste0(output.dir,"/", label, "_after_calc_CNV_score_TCIDEA_obj.Rds"))
+  
+  ## Remove object
+  rm(tcidea)
+  rm(final_cell_info)
+}
+
+
+
 calInferredCNV <- function(
   obj, min.cells = 10, MYwalk = 100, z.score = TRUE,  limit = TRUE, 
   annotationdata, log.file = "log_files.txt",
